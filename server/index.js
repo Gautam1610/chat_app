@@ -7,7 +7,11 @@ const app = express();
 const socket = require("socket.io");
 require("dotenv").config();
 
-app.use(cors());
+app.use(cors({
+  origin: "https://chat-app-five-smoky.vercel.app",
+  methods: ["POST","GET"],
+  credentials: true,
+}));
 app.use(express.json());
 
 mongoose
@@ -22,6 +26,9 @@ mongoose
     console.log(err.message);
   });
 
+app.get("/",(req,res)=>{
+  res.send("Hello World");
+})
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
